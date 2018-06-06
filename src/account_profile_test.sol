@@ -4,6 +4,10 @@ import "ds-test/test.sol";
 
 import "./account_profile.sol";
 
+import "../mix-item-store/src/item_store_registry.sol";
+import "../mix-item-store/src/item_store_ipfs_sha256.sol";
+import "../mix-item-store/src/item_store_ipfs_sha256_proxy.sol";
+
 
 /**
  * @title AccountProfileTest
@@ -12,22 +16,41 @@ import "./account_profile.sol";
  */
 contract AccountProfileTest is DSTest {
 
+    ItemStoreRegistry itemStoreRegistry;
+    ItemStoreIpfsSha256 itemStore;
+    ItemStoreIpfsSha256Proxy itemStoreProxy;
     AccountProfile accountProfile;
 
     function setUp() public {
-        accountProfile = new AccountProfile();
+        itemStoreRegistry = new ItemStoreRegistry();
+        itemStore = new ItemStoreIpfsSha256(itemStoreRegistry);
+        itemStoreProxy = new ItemStoreIpfsSha256Proxy(itemStore);
+        accountProfile = new AccountProfile(itemStoreRegistry);
+    }
+
+    function testFailSetProfileNotOwner() public {
+      bytes32 itemId = itemStoreProxy.create(bytes2(0x0001), 0x1234);
+      accountProfile.setProfile(itemId);
     }
 
     function testSetProfile() public {
       assertEq(accountProfile.getProfile(this), 0);
-      accountProfile.setProfile(0x1234);
-      assertEq(accountProfile.getProfile(this), 0x1234);
-      accountProfile.setProfile(0x2345);
-      assertEq(accountProfile.getProfile(this), 0x2345);
-      accountProfile.setProfile(0x3456);
-      assertEq(accountProfile.getProfile(this), 0x3456);
-      accountProfile.setProfile(0x4567);
-      assertEq(accountProfile.getProfile(this), 0x4567);
+
+      bytes32 itemId = itemStore.create(bytes2(0x0001), 0x1234);
+      accountProfile.setProfile(itemId);
+      assertEq(accountProfile.getProfile(this), itemId);
+
+      itemId = itemStore.create(bytes2(0x0002), 0x1234);
+      accountProfile.setProfile(itemId);
+      assertEq(accountProfile.getProfile(this), itemId);
+
+      itemId = itemStore.create(bytes2(0x0003), 0x1234);
+      accountProfile.setProfile(itemId);
+      assertEq(accountProfile.getProfile(this), itemId);
+
+      itemId = itemStore.create(bytes2(0x0004), 0x1234);
+      accountProfile.setProfile(itemId);
+      assertEq(accountProfile.getProfile(this), itemId);
     }
 
 }
