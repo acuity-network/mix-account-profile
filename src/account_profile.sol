@@ -25,7 +25,9 @@ contract AccountProfile {
      * @param itemId itemId of the profile.
      */
     function setProfile(bytes32 itemId) external {
+        // Store the itemId for the sender.
         accountProfile[msg.sender] = itemId;
+        // Log the event.
         emit ProfileSet(msg.sender, itemId);
     }
 
