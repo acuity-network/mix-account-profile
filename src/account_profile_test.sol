@@ -41,29 +41,57 @@ contract AccountProfileTest is DSTest {
     function testControlGetProfileNoProfile() public {
       bytes32 itemId = itemStore.create(bytes2(0x0001), 0x1234);
       accountProfile.setProfile(itemId);
-      accountProfile.getProfile(this);
+      accountProfile.getProfile();
     }
 
     function testFailGetProfileNoProfile() public view {
-      accountProfile.getProfile(this);
+      accountProfile.getProfile();
     }
 
     function testSetProfile() public {
       bytes32 itemId = itemStore.create(bytes2(0x0001), 0x1234);
       accountProfile.setProfile(itemId);
-      assertEq(accountProfile.getProfile(this), itemId);
+      assertEq(accountProfile.getProfile(), itemId);
 
       itemId = itemStore.create(bytes2(0x0002), 0x1234);
       accountProfile.setProfile(itemId);
-      assertEq(accountProfile.getProfile(this), itemId);
+      assertEq(accountProfile.getProfile(), itemId);
 
       itemId = itemStore.create(bytes2(0x0003), 0x1234);
       accountProfile.setProfile(itemId);
-      assertEq(accountProfile.getProfile(this), itemId);
+      assertEq(accountProfile.getProfile(), itemId);
 
       itemId = itemStore.create(bytes2(0x0004), 0x1234);
       accountProfile.setProfile(itemId);
-      assertEq(accountProfile.getProfile(this), itemId);
+      assertEq(accountProfile.getProfile(), itemId);
+    }
+
+    function testControlGetProfileByAccountNoProfile() public {
+      bytes32 itemId = itemStore.create(bytes2(0x0001), 0x1234);
+      accountProfile.setProfile(itemId);
+      accountProfile.getProfileByAccount(this);
+    }
+
+    function testFailGetProfileByAccountNoProfile() public view {
+      accountProfile.getProfileByAccount(this);
+    }
+
+    function testSetProfileByAccount() public {
+      bytes32 itemId = itemStore.create(bytes2(0x0001), 0x1234);
+      accountProfile.setProfile(itemId);
+      assertEq(accountProfile.getProfileByAccount(this), itemId);
+
+      itemId = itemStore.create(bytes2(0x0002), 0x1234);
+      accountProfile.setProfile(itemId);
+      assertEq(accountProfile.getProfileByAccount(this), itemId);
+
+      itemId = itemStore.create(bytes2(0x0003), 0x1234);
+      accountProfile.setProfile(itemId);
+      assertEq(accountProfile.getProfileByAccount(this), itemId);
+
+      itemId = itemStore.create(bytes2(0x0004), 0x1234);
+      accountProfile.setProfile(itemId);
+      assertEq(accountProfile.getProfileByAccount(this), itemId);
     }
 
 }

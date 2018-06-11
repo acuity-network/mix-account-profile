@@ -58,7 +58,7 @@ contract AccountProfile {
     }
 
     /**
-     * @dev Sets the profile for an account.
+     * @dev Sets the profile for the sender.
      * @param itemId itemId of the profile.
      */
     function setProfile(bytes32 itemId) external isOwned(itemId) {
@@ -69,10 +69,17 @@ contract AccountProfile {
     }
 
     /**
+     * @dev Gets the profile for the sender.
+     */
+    function getProfile() external view hasProfile(msg.sender) returns (bytes32) {
+        return accountProfile[msg.sender];
+    }
+
+    /**
      * @dev Gets the profile for an account.
      * @param account Account to get the profile for.
      */
-    function getProfile(address account) external view hasProfile(account) returns (bytes32) {
+    function getProfileByAccount(address account) external view hasProfile(account) returns (bytes32) {
         return accountProfile[account];
     }
 
