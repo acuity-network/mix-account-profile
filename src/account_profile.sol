@@ -29,10 +29,21 @@ contract AccountProfile {
     event ProfileSet(address indexed account, bytes32 itemId);
 
     /**
+     * @dev Revert if the profile is not owned by the sender.
+     * @param itemId itemId of the profile.
+     */
+    modifier isOwned(bytes32 itemId) {
+        // Ensure the item is owned by the sender.
+        require(itemStoreRegistry.getItemStore(itemId).getOwner(itemId) == msg.sender);
+        _;
+    }
+
+    /**
      * @dev Revert if the account doesn't have a profile.
      * @param account Address of the account.
      */
     modifier hasProfile(address account) {
+        // Ensure the profile has an account.
         require (accountProfile[account] != 0);
         _;
     }
@@ -50,9 +61,7 @@ contract AccountProfile {
      * @dev Sets the profile for an account.
      * @param itemId itemId of the profile.
      */
-    function setProfile(bytes32 itemId) external {
-        // Ensure the item is owned by the sender.
-        require(itemStoreRegistry.getItemStore(itemId).getOwner(itemId) == msg.sender);
+    function setProfile(bytes32 itemId) external isOwned(itemId) {
         // Store the itemId for the sender.
         accountProfile[msg.sender] = itemId;
         // Log the event.
