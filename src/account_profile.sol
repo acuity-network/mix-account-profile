@@ -29,6 +29,15 @@ contract AccountProfile {
     event ProfileSet(address indexed account, bytes32 itemId);
 
     /**
+     * @dev Revert if the account doesn't have a profile.
+     * @param account Address of the account.
+     */
+    modifier hasProfile(address account) {
+        require (accountProfile[account] != 0);
+        _;
+    }
+
+    /**
      * @dev Constructor.
      * @param _itemStoreRegistry Address of the ItemStoreRegistry contract.
      */
@@ -54,7 +63,7 @@ contract AccountProfile {
      * @dev Gets the profile for an account.
      * @param account Account to get the profile for.
      */
-    function getProfile(address account) external view returns (bytes32) {
+    function getProfile(address account) external view hasProfile(account) returns (bytes32) {
         return accountProfile[account];
     }
 

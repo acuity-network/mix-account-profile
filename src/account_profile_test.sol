@@ -28,14 +28,27 @@ contract AccountProfileTest is DSTest {
         accountProfile = new AccountProfile(itemStoreRegistry);
     }
 
+    function testControlSetProfileNotOwner() public {
+      bytes32 itemId = itemStore.create(bytes2(0x0001), 0x1234);
+      accountProfile.setProfile(itemId);
+    }
+
     function testFailSetProfileNotOwner() public {
       bytes32 itemId = itemStoreProxy.create(bytes2(0x0001), 0x1234);
       accountProfile.setProfile(itemId);
     }
 
-    function testSetProfile() public {
-      assertEq(accountProfile.getProfile(this), 0);
+    function testControlGetProfileNoProfile() public {
+      bytes32 itemId = itemStore.create(bytes2(0x0001), 0x1234);
+      accountProfile.setProfile(itemId);
+      accountProfile.getProfile(this);
+    }
 
+    function testFailGetProfileNoProfile() public view {
+      accountProfile.getProfile(this);
+    }
+
+    function testSetProfile() public {
       bytes32 itemId = itemStore.create(bytes2(0x0001), 0x1234);
       accountProfile.setProfile(itemId);
       assertEq(accountProfile.getProfile(this), itemId);
