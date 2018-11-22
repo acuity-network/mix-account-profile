@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 
 import "../mix-item-store/src/item_store_interface.sol";
 import "../mix-item-store/src/item_store_registry.sol";
@@ -26,7 +26,7 @@ contract AccountProfile {
      * @param account Account that has set its profile item.
      * @param itemId itemId of the profile.
      */
-    event ProfileSet(address indexed account, bytes32 itemId);
+    event ProfileSet(address indexed account, bytes32 indexed itemId);
 
     /**
      * @dev Revert if the profile is not owned by the sender.

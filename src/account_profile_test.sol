@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 
 import "ds-test/test.sol";
 
@@ -29,17 +29,17 @@ contract AccountProfileTest is DSTest {
     }
 
     function testControlSetProfileNotOwner() public {
-      bytes32 itemId = itemStore.create(bytes2(0x0001), 0x1234);
+      bytes32 itemId = itemStore.create(bytes2(0x0001), hex"1234");
       accountProfile.setProfile(itemId);
     }
 
     function testFailSetProfileNotOwner() public {
-      bytes32 itemId = itemStoreProxy.create(bytes2(0x0001), 0x1234);
+      bytes32 itemId = itemStoreProxy.create(bytes2(0x0001), hex"1234");
       accountProfile.setProfile(itemId);
     }
 
     function testControlGetProfileNoProfile() public {
-      bytes32 itemId = itemStore.create(bytes2(0x0001), 0x1234);
+      bytes32 itemId = itemStore.create(bytes2(0x0001), hex"1234");
       accountProfile.setProfile(itemId);
       accountProfile.getProfile();
     }
@@ -49,49 +49,49 @@ contract AccountProfileTest is DSTest {
     }
 
     function testSetProfile() public {
-      bytes32 itemId = itemStore.create(bytes2(0x0001), 0x1234);
+      bytes32 itemId = itemStore.create(bytes2(0x0001), hex"1234");
       accountProfile.setProfile(itemId);
       assertEq(accountProfile.getProfile(), itemId);
 
-      itemId = itemStore.create(bytes2(0x0002), 0x1234);
+      itemId = itemStore.create(bytes2(0x0002), hex"1234");
       accountProfile.setProfile(itemId);
       assertEq(accountProfile.getProfile(), itemId);
 
-      itemId = itemStore.create(bytes2(0x0003), 0x1234);
+      itemId = itemStore.create(bytes2(0x0003), hex"1234");
       accountProfile.setProfile(itemId);
       assertEq(accountProfile.getProfile(), itemId);
 
-      itemId = itemStore.create(bytes2(0x0004), 0x1234);
+      itemId = itemStore.create(bytes2(0x0004), hex"1234");
       accountProfile.setProfile(itemId);
       assertEq(accountProfile.getProfile(), itemId);
     }
 
     function testControlGetProfileByAccountNoProfile() public {
-      bytes32 itemId = itemStore.create(bytes2(0x0001), 0x1234);
+      bytes32 itemId = itemStore.create(bytes2(0x0001), hex"1234");
       accountProfile.setProfile(itemId);
-      accountProfile.getProfileByAccount(this);
+      accountProfile.getProfileByAccount(address(this));
     }
 
     function testFailGetProfileByAccountNoProfile() public view {
-      accountProfile.getProfileByAccount(this);
+      accountProfile.getProfileByAccount(address(this));
     }
 
     function testSetProfileByAccount() public {
-      bytes32 itemId = itemStore.create(bytes2(0x0001), 0x1234);
+      bytes32 itemId = itemStore.create(bytes2(0x0001), hex"1234");
       accountProfile.setProfile(itemId);
-      assertEq(accountProfile.getProfileByAccount(this), itemId);
+      assertEq(accountProfile.getProfileByAccount(address(this)), itemId);
 
-      itemId = itemStore.create(bytes2(0x0002), 0x1234);
+      itemId = itemStore.create(bytes2(0x0002), hex"1234");
       accountProfile.setProfile(itemId);
-      assertEq(accountProfile.getProfileByAccount(this), itemId);
+      assertEq(accountProfile.getProfileByAccount(address(this)), itemId);
 
-      itemId = itemStore.create(bytes2(0x0003), 0x1234);
+      itemId = itemStore.create(bytes2(0x0003), hex"1234");
       accountProfile.setProfile(itemId);
-      assertEq(accountProfile.getProfileByAccount(this), itemId);
+      assertEq(accountProfile.getProfileByAccount(address(this)), itemId);
 
-      itemId = itemStore.create(bytes2(0x0004), 0x1234);
+      itemId = itemStore.create(bytes2(0x0004), hex"1234");
       accountProfile.setProfile(itemId);
-      assertEq(accountProfile.getProfileByAccount(this), itemId);
+      assertEq(accountProfile.getProfileByAccount(address(this)), itemId);
     }
 
 }
