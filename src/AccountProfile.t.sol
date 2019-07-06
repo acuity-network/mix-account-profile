@@ -4,7 +4,7 @@ import "ds-test/test.sol";
 
 import "./AccountProfile.sol";
 
-import "mix-item-store/IitemStoreRegistry.sol";
+import "mix-item-store/ItemStoreRegistry.sol";
 import "mix-item-store/ItemStoreIpfsSha256.sol";
 import "mix-item-store/ItemStoreIpfsSha256Proxy.sol";
 
