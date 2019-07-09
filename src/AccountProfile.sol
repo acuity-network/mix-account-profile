@@ -34,7 +34,7 @@ contract AccountProfile {
      */
     modifier isOwned(bytes32 itemId) {
         // Ensure the item is owned by the sender.
-        require(itemStoreRegistry.getItemStore(itemId).getOwner(itemId) == msg.sender);
+        require (itemStoreRegistry.getItemStore(itemId).getOwner(itemId) == msg.sender, "Item is not owned by sender.");
         _;
     }
 
@@ -44,7 +44,7 @@ contract AccountProfile {
      */
     modifier hasProfile(address account) {
         // Ensure the profile has an account.
-        require (accountProfile[account] != 0);
+        require (accountProfile[account] != 0, "Account does not have a profile.");
         _;
     }
 
