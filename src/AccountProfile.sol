@@ -32,7 +32,7 @@ contract AccountProfile {
      * @dev Revert if the profile is not owned by the sender.
      * @param itemId itemId of the profile.
      */
-    modifier isOwned(bytes32 itemId) {
+    modifier isOwner(bytes32 itemId) {
         // Ensure the item is owned by the sender.
         require (itemStoreRegistry.getItemStore(itemId).getOwner(itemId) == msg.sender, "Item is not owned by sender.");
         _;
@@ -61,7 +61,7 @@ contract AccountProfile {
      * @dev Sets the profile for the sender.
      * @param itemId itemId of the profile.
      */
-    function setProfile(bytes32 itemId) external isOwned(itemId) {
+    function setProfile(bytes32 itemId) external isOwner(itemId) {
         // Store the itemId for the sender.
         accountProfile[msg.sender] = itemId;
         // Log the event.
