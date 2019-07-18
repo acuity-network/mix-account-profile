@@ -4,37 +4,37 @@ import "ds-test/test.sol";
 
 import "./MixAccountProfile.sol";
 
-import "mix-item-store/ItemStoreRegistry.sol";
-import "mix-item-store/ItemStoreIpfsSha256.sol";
-import "mix-item-store/ItemStoreIpfsSha256Proxy.sol";
+import "mix-item-store/MixItemStoreRegistry.sol";
+import "mix-item-store/MixItemStoreIpfsSha256.sol";
+import "mix-item-store/MixItemStoreIpfsSha256Proxy.sol";
 
 
 contract MixAccountProfileTest is DSTest {
 
-    ItemStoreRegistry itemStoreRegistry;
-    ItemStoreIpfsSha256 itemStoreIpfsSha256;
-    ItemStoreIpfsSha256Proxy itemStoreIpfsSha256Proxy;
+    MixItemStoreRegistry mixItemStoreRegistry;
+    MixItemStoreIpfsSha256 mixItemStoreIpfsSha256;
+    MixItemStoreIpfsSha256Proxy mixItemStoreIpfsSha256Proxy;
     MixAccountProfile mixAccountProfile;
 
     function setUp() public {
-        itemStoreRegistry = new ItemStoreRegistry();
-        itemStoreIpfsSha256 = new ItemStoreIpfsSha256(itemStoreRegistry);
-        itemStoreIpfsSha256Proxy = new ItemStoreIpfsSha256Proxy(itemStoreIpfsSha256);
-        mixAccountProfile = new MixAccountProfile(itemStoreRegistry);
+        mixItemStoreRegistry = new MixItemStoreRegistry();
+        mixItemStoreIpfsSha256 = new MixItemStoreIpfsSha256(mixItemStoreRegistry);
+        mixItemStoreIpfsSha256Proxy = new MixItemStoreIpfsSha256Proxy(mixItemStoreIpfsSha256);
+        mixAccountProfile = new MixAccountProfile(mixItemStoreRegistry);
     }
 
     function testControlSetProfileNotOwner() public {
-      bytes32 itemId = itemStoreIpfsSha256.create(bytes2(0x0001), hex"1234");
+      bytes32 itemId = mixItemStoreIpfsSha256.create(bytes2(0x0001), hex"1234");
       mixAccountProfile.setProfile(itemId);
     }
 
     function testFailSetProfileNotOwner() public {
-      bytes32 itemId = itemStoreIpfsSha256Proxy.create(bytes2(0x0001), hex"1234");
+      bytes32 itemId = mixItemStoreIpfsSha256Proxy.create(bytes2(0x0001), hex"1234");
       mixAccountProfile.setProfile(itemId);
     }
 
     function testControlGetProfileNoProfile() public {
-      bytes32 itemId = itemStoreIpfsSha256.create(bytes2(0x0001), hex"1234");
+      bytes32 itemId = mixItemStoreIpfsSha256.create(bytes2(0x0001), hex"1234");
       mixAccountProfile.setProfile(itemId);
       mixAccountProfile.getProfile();
     }
@@ -44,25 +44,25 @@ contract MixAccountProfileTest is DSTest {
     }
 
     function testSetProfile() public {
-      bytes32 itemId = itemStoreIpfsSha256.create(bytes2(0x0001), hex"1234");
+      bytes32 itemId = mixItemStoreIpfsSha256.create(bytes2(0x0001), hex"1234");
       mixAccountProfile.setProfile(itemId);
       assertEq(mixAccountProfile.getProfile(), itemId);
 
-      itemId = itemStoreIpfsSha256.create(bytes2(0x0002), hex"1234");
+      itemId = mixItemStoreIpfsSha256.create(bytes2(0x0002), hex"1234");
       mixAccountProfile.setProfile(itemId);
       assertEq(mixAccountProfile.getProfile(), itemId);
 
-      itemId = itemStoreIpfsSha256.create(bytes2(0x0003), hex"1234");
+      itemId = mixItemStoreIpfsSha256.create(bytes2(0x0003), hex"1234");
       mixAccountProfile.setProfile(itemId);
       assertEq(mixAccountProfile.getProfile(), itemId);
 
-      itemId = itemStoreIpfsSha256.create(bytes2(0x0004), hex"1234");
+      itemId = mixItemStoreIpfsSha256.create(bytes2(0x0004), hex"1234");
       mixAccountProfile.setProfile(itemId);
       assertEq(mixAccountProfile.getProfile(), itemId);
     }
 
     function testControlGetProfileByAccountNoProfile() public {
-      bytes32 itemId = itemStoreIpfsSha256.create(bytes2(0x0001), hex"1234");
+      bytes32 itemId = mixItemStoreIpfsSha256.create(bytes2(0x0001), hex"1234");
       mixAccountProfile.setProfile(itemId);
       mixAccountProfile.getProfileByAccount(address(this));
     }
@@ -72,19 +72,19 @@ contract MixAccountProfileTest is DSTest {
     }
 
     function testSetProfileByAccount() public {
-      bytes32 itemId = itemStoreIpfsSha256.create(bytes2(0x0001), hex"1234");
+      bytes32 itemId = mixItemStoreIpfsSha256.create(bytes2(0x0001), hex"1234");
       mixAccountProfile.setProfile(itemId);
       assertEq(mixAccountProfile.getProfileByAccount(address(this)), itemId);
 
-      itemId = itemStoreIpfsSha256.create(bytes2(0x0002), hex"1234");
+      itemId = mixItemStoreIpfsSha256.create(bytes2(0x0002), hex"1234");
       mixAccountProfile.setProfile(itemId);
       assertEq(mixAccountProfile.getProfileByAccount(address(this)), itemId);
 
-      itemId = itemStoreIpfsSha256.create(bytes2(0x0003), hex"1234");
+      itemId = mixItemStoreIpfsSha256.create(bytes2(0x0003), hex"1234");
       mixAccountProfile.setProfile(itemId);
       assertEq(mixAccountProfile.getProfileByAccount(address(this)), itemId);
 
-      itemId = itemStoreIpfsSha256.create(bytes2(0x0004), hex"1234");
+      itemId = mixItemStoreIpfsSha256.create(bytes2(0x0004), hex"1234");
       mixAccountProfile.setProfile(itemId);
       assertEq(mixAccountProfile.getProfileByAccount(address(this)), itemId);
     }
