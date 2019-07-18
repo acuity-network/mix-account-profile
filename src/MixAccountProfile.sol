@@ -5,11 +5,11 @@ import "mix-item-store/ItemStoreRegistry.sol";
 
 
 /**
- * @title AccountProfile
+ * @title MixAccountProfile
  * @author Jonathan Brown <jbrown@mix-blockchain.org>
- * @dev Smart contract for each account to associate itself with a profile item.
+ * @dev Enables each account to associate itself with a profile item.
  */
-contract AccountProfile {
+contract MixAccountProfile {
 
     /**
      * @dev Mapping of account to profile item.
