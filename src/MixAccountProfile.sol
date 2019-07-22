@@ -18,7 +18,7 @@ contract MixAccountProfile {
     /**
      * @dev MixItemStoreRegistry contract.
      */
-    MixItemStoreRegistry itemStoreRegistry;
+    MixItemStoreRegistry public itemStoreRegistry;
 
     /**
      * @dev An account has set its profile item.
